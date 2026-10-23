@@ -1,22 +1,32 @@
 # Kamphaeng Phet tourism — main application
 
-This is V2 promoted to the main application. The earlier version remains in the
-sibling Kamphaeng_Phet_Redesign_v1_backup directory.
+A bilingual tourism website for Kamphaeng Phet, with researched visitor
+information, Google Maps destinations and a browser-local catalogue editor.
 
 ## Run
 
 ```powershell
-npm install
-npm run dev -- --host 127.0.0.1 --port 5173 --strictPort
+npm ci
+npm run dev
 ```
 
-From the parent Tourist directory, use npm run dev.
+Open http://127.0.0.1:5173/. The development server binds to loopback by default.
 
 ## Checks
 
-- npm run build — production build.
-- npm test — page rendering, public/admin boundaries, the ten-click gesture,
-  local persistence, Maps destinations and photo/source coverage.
+```powershell
+npm test
+npm run build
+npm run check:http
+npm audit
+```
+
+Tests cover page rendering, public/admin boundaries, the ten-click gesture,
+local persistence, Maps destinations, photo/source coverage, unsafe URLs,
+malformed storage and image input. HTTP checks require a current build and
+exercise local dev/production responses, access restrictions and assets.
+
+Use `npm run preview` to inspect the production build at http://127.0.0.1:4173/.
 
 ## Administrator interface
 
@@ -29,6 +39,29 @@ has no server or shared database. Catalogue edits persist in this browser's
 local storage and do not update other visitors' catalogues. Browser storage
 limits may prevent saving large uploads; errors are shown instead of claiming
 success. Added images must be at most 2 MB.
+
+The editor accepts up to 100 attractions, bounds text and catalogue sizes, checks
+reference URL schemes and raster-image signatures, and rejects malformed saved
+data. Unsafe or corrupt saved catalogues fall back to the researched defaults;
+the existing storage key is retained so valid edits continue to load.
+
+## Security and deployment
+
+See [the security review](reference/SECURITY_REVIEW.md) for findings, fixes,
+verification results and limits. Dependency scans check known published
+advisories; they do not prove the application is free of vulnerabilities.
+
+Deploy the generated `dist/` directory using an HTTPS static host. The production
+HTML includes a Content Security Policy. Configure the headers from
+`config/security.mjs` on the production host as well; the Vite configuration
+applies those response headers only to local dev/preview servers. Frame embedding
+protection requires the host's `X-Frame-Options` or `frame-ancestors` header.
+The development server is for local development and must not be used as public
+production hosting.
+
+A shared administration service would require a backend, real authentication
+and server-side authorization. The current click gesture and browser storage
+must not be used to protect sensitive records or credentials.
 
 ## Content and photos
 

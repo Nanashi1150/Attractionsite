@@ -1,10 +1,11 @@
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { ArrowLeft, Save, Upload } from "lucide-react";
 import { useApp } from "../../contexts/AppContext";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { type Page } from "../../hooks/useRouter";
 import { type TouristAttraction } from "../../types/TouristAttraction";
 import { categoryKey } from "../../utils/category";
+import { MAX_IMAGE_BYTES, matchesImageSignature, safeExternalUrl, safeImageSource } from "../../utils/contentSafety";
 
 type Draft = Omit<TouristAttraction, "id">;
 const categories = ["Historical Site", "Temple", "National Park", "Museum", "Natural Attraction", "Cultural Site"];
@@ -19,22 +20,27 @@ export function FormPage({ mode, attractionId, onNavigate }: { mode: "add" | "ed
   const [draft, setDraft] = useState<Draft>(() => existing ? { ...existing } : { ...blank });
   const [error, setError] = useState("");
   const [reading, setReading] = useState(false);
+  const uploadGeneration = useRef(0);
   if (!isAdmin) return null;
-  const set = <K extends keyof Draft,>(key: K, value: Draft[K]) => setDraft(previous => ({ ...previous, [key]: value }));
+  const set = <K extends keyof Draft,>(key: K, value: Draft[K]) => {
+    if (key === 'image') { uploadGeneration.current += 1; setReading(false); }
+    setDraft(previous => ({ ...previous, [key]: value }));
+  };
   const textField = (key: keyof Draft, label: string, required = false, multiline = false) => <label key={key} className="block space-y-2">
     <span className="text-sm">{label}{required ? " *" : ""}</span>
     {multiline ? <textarea className={input + " min-h-32"} name={key} value={String(draft[key] ?? "")} required={required} onChange={e => set(key, e.target.value)} /> :
-      <input className={input} name={key} value={String(draft[key] ?? "")} required={required} onChange={e => set(key, e.target.value)} />}
+      <input className={input} name={key} value={String(draft[key] ?? "")} required={required} maxLength={key === 'image' ? undefined : 2048} onChange={e => set(key, e.target.value)} />}
   </label>;
   const submit = (event: FormEvent) => {
     event.preventDefault();
     setError("");
+    if (reading) { setError(th ? 'กรุณารอให้การอ่านรูปภาพเสร็จก่อน' : 'Wait until the image has finished loading.'); return; }
     try {
       if (mode === "edit" && !existing) throw new Error(th ? "ไม่พบสถานที่" : "Attraction not found");
       if (!draft.name.trim() || !draft.mapsQuery?.trim() || draft.place_description.trim().length < 20) throw new Error(th ? "กรุณาระบุชื่อ จุดหมายแผนที่ และคำอธิบายอย่างน้อย 20 ตัวอักษร" : "Enter a name, map destination and description of at least 20 characters.");
       if (!Number.isFinite(draft.entrance_fee) || draft.entrance_fee < 0) throw new Error(th ? "ค่าเข้าชมต้องเป็นเลขตั้งแต่ 0 ขึ้นไป" : "Admission must be zero or greater.");
-      if (draft.sourceUrl && !/^https?:$/i.test(new URL(draft.sourceUrl).protocol)) throw new Error(th ? "ใช้ลิงก์แหล่งข้อมูลแบบ https หรือ http" : "Use an HTTPS or HTTP reference URL.");
-      if (draft.image && !/^(https?:\/\/|\/images\/|data:image\/(jpeg|png|webp|gif);base64,)/i.test(draft.image)) throw new Error(th ? "รูปภาพต้องเป็นลิงก์ http/https หรือไฟล์รูปที่อัปโหลด" : "Use an HTTP/HTTPS image URL or an uploaded image.");
+      if (draft.sourceUrl && !safeExternalUrl(draft.sourceUrl)) throw new Error(th ? "ใช้ลิงก์แหล่งข้อมูลแบบ https หรือ http โดยไม่มีชื่อผู้ใช้หรือรหัสผ่าน" : "Use an HTTP/HTTPS reference URL without embedded credentials.");
+      if (draft.image && !safeImageSource(draft.image)) throw new Error(th ? "รูปภาพต้องเป็นลิงก์ http/https หรือไฟล์รูปที่รองรับ ขนาดไม่เกิน 2 MB" : "Use an HTTP/HTTPS image URL or a supported image of up to 2 MB.");
       const data = { ...draft, name: draft.name.trim(), place_description: draft.place_description.trim(), mapsQuery: draft.mapsQuery?.trim() };
       if (mode === "edit" && attractionId) updateAttraction(attractionId, data); else addAttraction(data);
       onNavigate("manage");
@@ -72,14 +78,24 @@ export function FormPage({ mode, attractionId, onNavigate }: { mode: "add" | "ed
         <legend className="eyebrow px-2">{th ? "ภาพและแหล่งข้อมูล" : "Image and references"}</legend>
         {textField("image", th ? "ลิงก์รูปภาพ" : "Image URL")}
         <label className="block space-y-3 text-sm"><span className="flex items-center gap-2"><Upload className="h-4 w-4" />{th ? "อัปโหลด JPG / PNG / WebP / GIF (ไม่เกิน 2 MB)" : "Upload JPG / PNG / WebP / GIF (up to 2 MB)"}</span>
-          <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={e => {
+          <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={async e => {
+            const generation = ++uploadGeneration.current;
+            setReading(false);
             const file = e.target.files?.[0];
             if (!file) return;
-            if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type) || file.size > 2 * 1024 * 1024) { setError(th ? "ใช้ไฟล์รูปภาพขนาดไม่เกิน 2 MB" : "Use an image of up to 2 MB."); return; }
+            if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type) || file.size === 0 || file.size > MAX_IMAGE_BYTES) { setError(th ? "ใช้ไฟล์รูปภาพขนาดไม่เกิน 2 MB" : "Use an image of up to 2 MB."); return; }
             setReading(true); setError("");
+            try {
+              const bytes = new Uint8Array(await file.slice(0, 16).arrayBuffer());
+              if (generation !== uploadGeneration.current) return;
+              if (!matchesImageSignature(file.type, bytes)) throw new Error('Unsupported image contents');
+            } catch {
+              if (generation === uploadGeneration.current) { setReading(false); setError(th ? 'เนื้อหาไฟล์ไม่ตรงกับชนิดรูปภาพ หรืออ่านไฟล์ไม่ได้' : 'The file contents do not match a supported image, or could not be read.'); }
+              return;
+            }
             const reader = new FileReader();
-            reader.onload = () => { set("image", String(reader.result)); setReading(false); };
-            reader.onerror = () => { setError(th ? "อ่านรูปภาพไม่สำเร็จ" : "Could not read image"); setReading(false); };
+            reader.onload = () => { if (generation === uploadGeneration.current) set("image", String(reader.result)); };
+            reader.onerror = () => { if (generation === uploadGeneration.current) { setError(th ? "อ่านรูปภาพไม่สำเร็จ" : "Could not read image"); setReading(false); } };
             reader.readAsDataURL(file);
           }} />
         </label>

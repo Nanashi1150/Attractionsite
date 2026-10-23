@@ -6,6 +6,7 @@ import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { categoryKey } from "../../utils/category";
 import { attractionName, attractionDescription, attractionHours, attractionFee, attractionAddress, mapQuery, googleMapsUrl, googleDirectionsUrl } from "../../types/TouristAttraction";
 import { photoCredits } from "../../data/photoCredits";
+import { safeExternalUrl } from "../../utils/contentSafety";
 
 export function DetailPage({ attractionId, onNavigate }: { attractionId: number; onNavigate: (page: Page, params?: RouterParams) => void }) {
   const { getAttractionById, isAdmin } = useApp();
@@ -15,6 +16,7 @@ export function DetailPage({ attractionId, onNavigate }: { attractionId: number;
   const back = <button onClick={() => onNavigate("attractions")} className="link-line inline-flex items-center gap-3 text-xs uppercase tracking-widest"><ArrowLeft className="h-4 w-4" />{t("detail.back")}</button>;
   if (!a) return <div className="mx-auto max-w-xl px-6 py-24 text-center"><h1 className="font-display text-4xl">{t("detail.not.found")}</h1><div className="mt-8">{back}</div></div>;
   const name = attractionName(a, th);
+  const sourceUrl = safeExternalUrl(a.sourceUrl);
   const credit = photoCredits.find(p => p.image === a.image);
   const facts = [
     [t("form.category"), t(categoryKey(a.category))],
@@ -46,7 +48,7 @@ export function DetailPage({ attractionId, onNavigate }: { attractionId: number;
           <h3 className="text-sm font-medium">{th ? "ก่อนออกเดินทาง" : "Before you go"}</h3>
           <p className="mt-3 text-sm leading-loose text-muted-foreground">{tip}</p>
         </section>}
-        {a.sourceUrl && <p className="mt-8 text-xs leading-relaxed text-muted-foreground">{th ? "ข้อมูลอ้างอิง: " : "Reference: "}<a className="underline underline-offset-4" href={a.sourceUrl} target="_blank" rel="noreferrer">{a.sourceName || (th ? "แหล่งข้อมูลสถานที่" : "Attraction information")} <ArrowUpRight className="inline h-3 w-3" /></a></p>}
+        {sourceUrl && <p className="mt-8 text-xs leading-relaxed text-muted-foreground">{th ? "ข้อมูลอ้างอิง: " : "Reference: "}<a className="underline underline-offset-4" href={sourceUrl} target="_blank" rel="noreferrer">{a.sourceName || (th ? "แหล่งข้อมูลสถานที่" : "Attraction information")} <ArrowUpRight className="inline h-3 w-3" /></a></p>}
       </div>
       <aside>
         <h2 className="eyebrow">{th ? "ข้อมูลสำหรับการเข้าชม" : "Plan your visit"}</h2>

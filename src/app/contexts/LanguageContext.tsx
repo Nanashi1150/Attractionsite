@@ -286,18 +286,20 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>(() => {
+    try {
+      const saved = localStorage.getItem('language');
+      return saved === 'th' ? 'th' : 'en';
+    } catch { return 'en'; }
+  });
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage && (savedLanguage === 'en' || savedLanguage === 'th')) {
-      setLanguage(savedLanguage);
-    }
-  }, []);
+    document.documentElement.lang = language;
+  }, [language]);
 
   const changeLanguage = (lang: Language) => {
     setLanguage(lang);
-    localStorage.setItem('language', lang);
+    try { localStorage.setItem('language', lang); } catch { /* Language remains usable without storage. */ }
   };
 
   const t = (key: string): string => {

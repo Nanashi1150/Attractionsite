@@ -6,7 +6,9 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "test": "node scripts/test.mjs"
+    "test": "node scripts/test.mjs",
+    "preview": "vite preview",
+    "check:http": "node scripts/check-http.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -59,7 +61,6 @@
     "react-popper": "2.3.0",
     "react-resizable-panels": "2.1.7",
     "react-responsive-masonry": "2.7.1",
-    "react-router": "7.13.0",
     "react-slick": "0.31.0",
     "recharts": "2.15.2",
     "sonner": "2.0.3",
@@ -73,7 +74,7 @@
     "esbuild": "0.25.12",
     "react-test-renderer": "18.3.1",
     "tailwindcss": "4.1.12",
-    "vite": "6.3.5"
+    "vite": "6.4.5"
   },
   "peerDependencies": {
     "react": "18.3.1",
@@ -89,7 +90,7 @@
   },
   "pnpm": {
     "overrides": {
-      "vite": "6.3.5"
+      "vite": "6.4.5"
     }
   }
 }

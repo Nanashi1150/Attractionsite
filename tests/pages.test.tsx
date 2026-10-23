@@ -56,3 +56,16 @@ test('About renders a five-step roadmap and home omits the removed hero badge', 
   assert.doesNotMatch(home, />UNESCO World Heritage</);
   assert.doesNotMatch(home, /images\.unsplash\.com/);
 });
+test('saved text is escaped rather than interpreted as HTML', () => {
+  const previous = Object.getOwnPropertyDescriptor(globalThis, 'localStorage');
+  const saved = JSON.stringify([{ ...mockAttractions[0], name: '<img src=x onerror=alert(1)>' }]);
+  Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: { getItem: (key: string) => key === 'kamphaeng-phet.attractions.v2' ? saved : null } });
+  try {
+    const html = renderToStaticMarkup(wrap(<DetailPage attractionId={1} onNavigate={noNavigation} />));
+    assert.match(html, /&lt;img src=x onerror=alert\(1\)&gt;/);
+    assert.doesNotMatch(html, /<img src=x onerror/);
+  } finally {
+    if (previous) Object.defineProperty(globalThis, 'localStorage', previous);
+    else Reflect.deleteProperty(globalThis, 'localStorage');
+  }
+});

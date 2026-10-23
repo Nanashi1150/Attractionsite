@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { create, act, type ReactTestRenderer } from 'react-test-renderer';
 import { AppProvider, useApp } from '../src/app/contexts/AppContext';
-import { LanguageProvider } from '../src/app/contexts/LanguageContext';
+import { LanguageProvider, useLanguage } from '../src/app/contexts/LanguageContext';
 import { Header } from '../src/app/components/Header';
 import { AttractionsPage } from '../src/app/components/pages/AttractionsPage';
 import { DetailPage } from '../src/app/components/pages/DetailPage';
@@ -100,6 +100,45 @@ test('the administrator form saves edits while preserving translated content and
 test('malformed saved data falls back to the verified catalogue', () => {
   store.set('kamphaeng-phet.attractions.v2', '[{"id":"broken"}]'); mount();
   assert.equal(app.attractions.length, 5);
+});
+test('exit admin revokes callbacks captured before exit, and unmount also revokes access', () => {
+  mount(); clicks(10);
+  const deleteBeforeExit = app.deleteAttraction;
+  act(() => app.exitAdmin());
+  assert.throws(() => deleteBeforeExit(1), /Administrator/);
+  clicks(10);
+  const deleteBeforeUnmount = app.deleteAttraction;
+  act(() => renderer!.unmount()); renderer = undefined;
+  assert.throws(() => deleteBeforeUnmount(1), /Administrator/);
+});
+test('consecutive mutations preserve each prior change instead of overwriting it', () => {
+  mount(); clicks(10);
+  act(() => { app.deleteAttraction(1); app.deleteAttraction(2); });
+  assert.equal(app.attractions.length, 3);
+  assert.equal(app.getAttractionById(1), undefined);
+  assert.equal(app.getAttractionById(2), undefined);
+});
+test('unsafe content is rejected by mutation methods as well as the form', () => {
+  mount(); clicks(10);
+  assert.throws(() => app.updateAttraction(1, { ...mockAttractions[0], sourceUrl: 'javascript:alert(1)' }), /Invalid/);
+  assert.equal(app.getAttractionById(1)?.sourceUrl, mockAttractions[0].sourceUrl);
+});
+test('corrupt optional fields in persisted data cannot crash a rendered catalogue', () => {
+  store.set('kamphaeng-phet.attractions.v2', JSON.stringify([{ ...mockAttractions[0], nameTh: {} }]));
+  mount();
+  act(() => renderer!.update(wrap(<><Probe /><AttractionsPage onNavigate={noNavigation} /></>)));
+  assert.equal(app.attractions.length, 5);
+});
+test('the public site and language switch remain usable when browser storage is blocked', () => {
+  localStorage.getItem = () => { throw new DOMException('Blocked', 'SecurityError'); };
+  failStorage = true;
+  let languageApi: ReturnType<typeof useLanguage>;
+  function LanguageProbe() { languageApi = useLanguage(); return null; }
+  act(() => { renderer = create(wrap(<><Probe /><LanguageProbe /></>)); });
+  assert.equal(app.attractions.length, 5);
+  act(() => languageApi!.setLanguage('th'));
+  assert.equal(languageApi!.language, 'th');
+  assert.equal(document.documentElement.lang, 'th');
 });
 
 

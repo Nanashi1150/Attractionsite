@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
+import { productionContentSecurityPolicy, responseSecurityHeaders } from './config/security.mjs'
 
 
 function figmaAssetResolver() {
@@ -27,7 +28,26 @@ export default defineConfig({
     // Tailwind is not being actively used – do not remove them
     react(),
     tailwindcss(),
+    {
+      name: 'production-content-security-policy',
+      apply: 'build',
+      transformIndexHtml() {
+        return [{ tag: 'meta', attrs: { 'http-equiv': 'Content-Security-Policy', content: productionContentSecurityPolicy }, injectTo: 'head-prepend' }]
+      },
+    },
   ],
+  server: {
+    host: '127.0.0.1',
+    strictPort: true,
+    cors: false,
+    headers: responseSecurityHeaders,
+    fs: {
+      strict: true,
+      allow: [path.resolve(__dirname)],
+      deny: ['**/.env', '**/.env.*', '**/*.{crt,pem,key}', '**/.git/**', '**/reference/photos/**', '**/.test-output/**', '**/.npm-cache/**'],
+    },
+  },
+  preview: { host: '127.0.0.1', strictPort: true, headers: responseSecurityHeaders },
   resolve: {
     alias: {
       '@/styles': path.resolve(__dirname, './src/styles'),
