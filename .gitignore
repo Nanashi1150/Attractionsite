@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.test-output/
+.npm-cache/
+reference/photos/
+package.original.json
+vite.config.original.ts
+*.log
+.env*
+!.env.example

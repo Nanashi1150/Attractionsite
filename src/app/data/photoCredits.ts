@@ -1,0 +1,7 @@
+export const photoCredits = [
+  { image: '/images/historical-park.webp', place: 'Kamphaeng Phet Historical Park', author: 'Chainfoto', license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/', source: 'https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet_Historical_Park.jpg' },
+  { image: '/images/wat-phra-borommathat.webp', place: 'Wat Phra Borommathat, Nakhon Chum', author: 'Kittipong khunnen', license: 'CC BY-SA 3.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/', source: 'https://commons.wikimedia.org/wiki/File:Wat_Phra_Borom_That_Kamphaeng_Phet,_Thailand._01.jpg' },
+  { image: '/images/khlong-lan.webp', place: 'Khlong Lan National Park', author: 'Noomcpk', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', source: 'https://commons.wikimedia.org/wiki/File:Khlong_Lan_National_Park.jpg' },
+  { image: '/images/national-museum.webp', place: 'Kamphaeng Phet National Museum', author: 'Supakit prem', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', source: 'https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet_National_Museum.jpg' },
+  { image: '/images/mae-wong.webp', place: 'Mae Wong National Park', author: 'Sirapa Atikomchakorn', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', source: 'https://commons.wikimedia.org/wiki/File:1054-Mae-Wong-National-park-01.jpg' },
+];
