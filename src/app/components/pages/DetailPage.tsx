@@ -5,7 +5,7 @@ import { type Page, type RouterParams } from "../../hooks/useRouter";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { categoryKey } from "../../utils/category";
 import { attractionName, attractionDescription, attractionHours, attractionFee, attractionAddress, mapQuery, googleMapsUrl, googleDirectionsUrl } from "../../types/TouristAttraction";
-import { photoCredits } from "../../data/photoCredits";
+import { photoCredits, attractionPhoto } from "../../data/photoCredits";
 import { safeExternalUrl } from "../../utils/contentSafety";
 
 export function DetailPage({ attractionId, onNavigate }: { attractionId: number; onNavigate: (page: Page, params?: RouterParams) => void }) {
@@ -17,7 +17,8 @@ export function DetailPage({ attractionId, onNavigate }: { attractionId: number;
   if (!a) return <div className="mx-auto max-w-xl px-6 py-24 text-center"><h1 className="font-display text-4xl">{t("detail.not.found")}</h1><div className="mt-8">{back}</div></div>;
   const name = attractionName(a, th);
   const sourceUrl = safeExternalUrl(a.sourceUrl);
-  const credit = photoCredits.find(p => p.image === a.image);
+  const photo = attractionPhoto(a, 'detail');
+  const credit = photoCredits.find(p => p.image === photo);
   const facts = [
     [t("form.category"), t(categoryKey(a.category))],
     [t("detail.opening.hours"), attractionHours(a, th)],
@@ -36,8 +37,8 @@ export function DetailPage({ attractionId, onNavigate }: { attractionId: number;
       <h1 className="mt-6 font-display text-4xl font-light leading-tight md:text-6xl">{name}</h1>
       <p className="mx-auto mt-6 flex max-w-2xl items-start justify-center gap-2 text-sm leading-relaxed text-muted-foreground"><MapPin className="mt-1 h-4 w-4 shrink-0" />{attractionAddress(a, th)}</p>
     </header>
-    {a.image && <figure className="mt-12">
-      <ImageWithFallback src={a.image} alt={name} className={"w-full object-cover " + (a.id === 4 ? "aspect-[4/3] max-h-[480px]" : "aspect-[4/3] md:aspect-[16/8]")} />
+    {photo && <figure className="mt-12">
+      <ImageWithFallback src={photo} alt={name} className={a.id === 4 ? "h-[480px] w-full bg-secondary object-contain md:h-[600px]" : "aspect-[4/3] w-full object-cover md:aspect-[16/8]"} />
       {credit && <figcaption className="mt-3 text-xs text-muted-foreground"><a href={credit.source} target="_blank" rel="noreferrer" className="underline underline-offset-2">{credit.author} · {credit.license}</a> · {th ? "ปรับขนาดและครอบภาพ" : "Resized and cropped"}</figcaption>}
     </figure>}
     <div className="mt-16 grid gap-16 lg:grid-cols-[1.3fr_1fr] lg:gap-20">

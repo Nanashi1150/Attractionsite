@@ -1,7 +1,17 @@
-export const photoCredits = [
-  { image: '/images/historical-park.webp', place: 'Kamphaeng Phet Historical Park', author: 'Chainfoto', license: 'CC BY 4.0', licenseUrl: 'https://creativecommons.org/licenses/by/4.0/', source: 'https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet_Historical_Park.jpg' },
-  { image: '/images/wat-phra-borommathat.webp', place: 'Wat Phra Borommathat, Nakhon Chum', author: 'Kittipong khunnen', license: 'CC BY-SA 3.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/', source: 'https://commons.wikimedia.org/wiki/File:Wat_Phra_Borom_That_Kamphaeng_Phet,_Thailand._01.jpg' },
-  { image: '/images/khlong-lan.webp', place: 'Khlong Lan National Park', author: 'Noomcpk', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', source: 'https://commons.wikimedia.org/wiki/File:Khlong_Lan_National_Park.jpg' },
-  { image: '/images/national-museum.webp', place: 'Kamphaeng Phet National Museum', author: 'Supakit prem', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', source: 'https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet_National_Museum.jpg' },
-  { image: '/images/mae-wong.webp', place: 'Mae Wong National Park', author: 'Sirapa Atikomchakorn', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', source: 'https://commons.wikimedia.org/wiki/File:1054-Mae-Wong-National-park-01.jpg' },
-];
+import manifest from '../../../reference/photo-manifest.json';
+import type { TouristAttraction } from '../types/TouristAttraction';
+
+export const photoCredits = manifest;
+
+export function sitePhoto(role: string): string {
+  const photo = photoCredits.find(photo => photo.role === role);
+  if (!photo) throw new Error('Missing site photograph: ' + role);
+  return photo.image;
+}
+
+/** Preserve uploaded catalogue images; curated defaults use a distinct view. */
+export function attractionPhoto(attraction: TouristAttraction, view: 'featured' | 'detail'): string | undefined {
+  const list = photoCredits.find(photo => photo.role === 'list-' + attraction.id);
+  const alternate = photoCredits.find(photo => photo.role === view + '-' + attraction.id);
+  return alternate && attraction.image === list?.image ? alternate.image : attraction.image;
+}

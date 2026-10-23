@@ -3,7 +3,7 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { type Page } from "../../hooks/useRouter";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { timelineData } from "../../data/timelineData";
-import { photoCredits } from "../../data/photoCredits";
+import { photoCredits, sitePhoto } from "../../data/photoCredits";
 
 export function AboutPage({ onNavigate }: { onNavigate?: (page: Page) => void }) {
   const { language } = useLanguage();
@@ -11,7 +11,7 @@ export function AboutPage({ onNavigate }: { onNavigate?: (page: Page) => void })
   const L = (en: string, thai: string) => th ? thai : en;
   return <div>
     <section className="relative flex min-h-[75svh] items-end overflow-hidden pt-32 text-white">
-      <ImageWithFallback src="/images/historical-park.webp" alt={L("Laterite ruins at Kamphaeng Phet Historical Park", "โบราณสถานศิลาแลงในอุทยานประวัติศาสตร์กำแพงเพชร")} className="absolute inset-0 h-full w-full object-cover" />
+      <ImageWithFallback src={sitePhoto('about-hero')} alt={L("Historic city wall of Kamphaeng Phet", "แนวกำแพงเมืองเก่ากำแพงเพชร")} className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/35" />
       <div className="relative mx-auto w-full max-w-7xl px-6 pb-16 lg:px-10 lg:pb-20">
         <span className="eyebrow !text-white/75">{L("A province with stories to tell", "เรื่องราวของเมืองกำแพงเพชร")}</span>
@@ -29,7 +29,7 @@ export function AboutPage({ onNavigate }: { onNavigate?: (page: Page) => void })
         <a href="https://whc.unesco.org/en/list/574/" target="_blank" rel="noreferrer" className="link-line mt-7 self-start text-xs uppercase tracking-widest">UNESCO World Heritage Centre <ArrowUpRight className="inline h-3 w-3" /></a>
       </div>
       <figure className="self-center">
-        <ImageWithFallback src="/images/wat-phra-borommathat.webp" alt={L("Golden stupa of Wat Phra Borommathat in Nakhon Chum", "เจดีย์สีทองวัดพระบรมธาตุ นครชุม")} loading="lazy" className="aspect-[4/5] w-full object-cover" />
+        <ImageWithFallback src={sitePhoto('about-culture')} alt={L("Wat Phra Borommathat in Nakhon Chum", "วัดพระบรมธาตุ นครชุม")} loading="lazy" className="aspect-[4/5] w-full object-cover" />
         <figcaption className="mt-4 text-xs text-muted-foreground">{L("Wat Phra Borommathat · Nakhon Chum, west of the Ping", "วัดพระบรมธาตุ · นครชุม ฝั่งตะวันตกของแม่น้ำปิง")}</figcaption>
       </figure>
     </section>
@@ -65,7 +65,7 @@ export function AboutPage({ onNavigate }: { onNavigate?: (page: Page) => void })
       </div>
     </section>
     <section className="relative overflow-hidden text-white">
-      <ImageWithFallback src="/images/khlong-lan.webp" alt={L("Khlong Lan waterfall", "น้ำตกคลองลาน")} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+      <ImageWithFallback src={sitePhoto('about-nature')} alt={L("Khlong Lan waterfall", "น้ำตกคลองลาน")} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-0 bg-black/55" />
       <div className="relative mx-auto max-w-3xl px-6 py-28 text-center">
         <span className="eyebrow !text-white/80">{L("From stories to places", "จากเรื่องราว สู่การเดินทาง")}</span>

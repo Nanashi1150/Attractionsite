@@ -6,16 +6,17 @@ import { Page } from "../../hooks/useRouter";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 import { categoryKey } from "../../utils/category";
 import { attractionName, attractionAddress } from "../../types/TouristAttraction";
+import { sitePhoto, attractionPhoto } from "../../data/photoCredits";
 
 interface IndexPageProps {
   onNavigate: (page: Page, params?: any) => void;
 }
 
-const HERO = "/images/historical-park.webp";
+const HERO = sitePhoto('home-hero');
 const PILLAR_IMAGES = [
-  "/images/historical-park.webp",
-  "/images/wat-phra-borommathat.webp",
-  "/images/khlong-lan.webp",
+  sitePhoto('home-heritage'),
+  sitePhoto('home-culture'),
+  sitePhoto('home-nature'),
 ];
 
 const fade = {
@@ -120,7 +121,7 @@ export function IndexPage({ onNavigate }: IndexPageProps) {
               {top.map((a) => (
                 <motion.article key={a.id} variants={fade} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-60px" }} className="group">
                   <button onClick={() => onNavigate("detail", { id: a.id })} aria-label={attractionName(a, th)} className="block aspect-[3/4] w-full overflow-hidden">
-                    <ImageWithFallback src={a.image || ""} alt={attractionName(a, th)} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
+                    <ImageWithFallback src={attractionPhoto(a, 'featured') || ""} alt={attractionName(a, th)} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105" />
                   </button>
                   <div className="mt-6 flex items-center justify-between">
                     <span className="eyebrow">{t(categoryKey(a.category))}</span>

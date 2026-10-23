@@ -1,4 +1,4 @@
-"""Create local WebP derivatives; preserve original photographs and attribution."""
+"""Create local WebP derivatives; preserve reference copies and attribution."""
 from pathlib import Path
 from PIL import Image, ImageOps
 

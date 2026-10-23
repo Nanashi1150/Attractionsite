@@ -19,16 +19,17 @@ preview servers. This application is a static frontend with browser-local edits.
 
 ## Verification
 
-- `npm test`: 25 tests passed, including public/editor separation, click count and
+- `npm test`: 27 tests passed, including public/editor separation, click count and
   timeout, CRUD persistence, stale-callback revocation, consecutive changes,
   blocked storage, text escaping, malformed/oversized data, unsafe URLs, image
-  signatures, image fallback recovery and catalogue/location coverage.
+  signatures, image fallback recovery, catalogue/location coverage and 20 unique
+  default image positions verified by source URL and file hash.
 - `npm run build`: passed using Vite 6.4.5.
 - `npm run check:http`: passed development and production HTTP checks. Verified
   defensive response headers; no CORS permission for an untrusted origin; a 403
   for an untrusted Host header; blocked environment files including Windows
   alternate-path and raw/import forms; blocked Git metadata, original photos and
-  outside-root files; production HTML/CSP/JS/CSS; all five photo assets; and no
+  outside-root files; production HTML/CSP/JS/CSS; all 20 photo assets; and no
   original application source exposed by the production preview.
 - `npm audit`: 0 known vulnerabilities after changes. This is a snapshot of
   published advisory data and installed versions at review time.

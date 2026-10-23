@@ -4,6 +4,7 @@ import { readFile, writeFile, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { request as httpRequest } from 'node:http';
+import { createServer as createPortProbe } from 'node:net';
 import { createServer, preview } from 'vite';
 import { responseSecurityHeaders } from '../config/security.mjs';
 
@@ -25,11 +26,18 @@ function listeningUrl(server) {
   assert.ok(address && typeof address === 'object');
   return 'http://127.0.0.1:' + address.port;
 }
+async function availablePort() {
+  const probe = createPortProbe();
+  await new Promise((resolve, reject) => { probe.on('error', reject); probe.listen(0, '127.0.0.1', resolve); });
+  const port = probe.address().port;
+  await new Promise((resolve, reject) => probe.close(error => error ? reject(error) : resolve()));
+  return port;
+}
 try {
   await writeFile(envFile, 'SYNTHETIC_AUDIT_VALUE=' + token, { flag: 'wx' }); envCreated = true;
   await writeFile(outsideFile, token, { flag: 'wx' }); outsideCreated = true;
   // This check exercises HTTP boundaries; React behaviour is covered separately.
-  dev = await createServer({ root, server: { port: 0, preTransformRequests: false }, optimizeDeps: { noDiscovery: true, include: [] }, logLevel: 'silent' });
+  dev = await createServer({ root, server: { port: await availablePort(), preTransformRequests: false }, optimizeDeps: { noDiscovery: true, include: [] }, logLevel: 'silent' });
   await dev.listen();
   const devUrl = listeningUrl(dev.httpServer);
   const home = await request(devUrl, '/');
@@ -65,7 +73,7 @@ try {
   }
   checks.push('Environment files, Windows alternate paths, Git metadata, originals and outside-root files blocked: passed');
 
-  production = await preview({ root, preview: { port: 0 }, logLevel: 'silent' });
+  production = await preview({ root, preview: { port: await availablePort() }, logLevel: 'silent' });
   const productionUrl = listeningUrl(production.httpServer);
   const response = await request(productionUrl, '/');
   assert.equal(response.status, 200); checkHeaders(response);
@@ -84,13 +92,14 @@ try {
   assert.equal(css.status, 200); assert.match(css.headers.get('content-type'), /text\/css/);
   await css.text();
   checks.push('Production HTML, CSP and bundled JavaScript: passed');
-  for (const name of ['historical-park', 'wat-phra-borommathat', 'khlong-lan', 'national-museum', 'mae-wong']) {
-    const image = await request(productionUrl, '/images/' + name + '.webp');
+  const photos = JSON.parse(await readFile(path.join(root, 'reference', 'photo-manifest.json'), 'utf8'));
+  for (const photo of photos) {
+    const image = await request(productionUrl, photo.image);
     assert.equal(image.status, 200); assert.match(image.headers.get('content-type'), /image\/webp/);
-    const local = await readFile(path.join(root, 'public', 'images', name + '.webp'));
+    const local = await readFile(path.join(root, 'public', photo.image.slice(1)));
     assert.equal((await image.arrayBuffer()).byteLength, local.length);
   }
-  checks.push('All five production photographs: passed');
+  checks.push('All ' + photos.length + ' distinct production photographs: passed');
   const source = await request(productionUrl, '/src/app/contexts/AppContext.tsx');
   assert.ok(!(await source.text()).includes('function AppProvider'));
   checks.push('Production preview does not expose original application source: passed');

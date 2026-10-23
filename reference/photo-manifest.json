@@ -1,0 +1,222 @@
+[
+  {
+    "role": "list-1",
+    "image": "/images/historical-park.webp",
+    "place": "Kamphaeng Phet Historical Park",
+    "author": "Chainfoto",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet_Historical_Park.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Kamphaeng_Phet_Historical_Park.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Kamphaeng_Phet_Historical_Park.jpg/1280px-Kamphaeng_Phet_Historical_Park.jpg"
+  },
+  {
+    "role": "list-2",
+    "image": "/images/wat-phra-borommathat.webp",
+    "place": "Wat Phra Borommathat, Nakhon Chum",
+    "author": "Kittipong khunnen",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wat_Phra_Borom_That_Kamphaeng_Phet,_Thailand._01.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._01.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._01.jpg/1280px-Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._01.jpg"
+  },
+  {
+    "role": "list-3",
+    "image": "/images/khlong-lan.webp",
+    "place": "Khlong Lan National Park",
+    "author": "Noomcpk",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Khlong_Lan_National_Park.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Khlong_Lan_National_Park.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Khlong_Lan_National_Park.jpg/1280px-Khlong_Lan_National_Park.jpg"
+  },
+  {
+    "role": "list-4",
+    "image": "/images/national-museum.webp",
+    "place": "Kamphaeng Phet National Museum",
+    "author": "Supakit prem",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet_National_Museum.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Kamphaeng_Phet_National_Museum.jpg",
+    "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Kamphaeng_Phet_National_Museum.jpg"
+  },
+  {
+    "role": "list-5",
+    "image": "/images/mae-wong.webp",
+    "place": "Mae Wong National Park",
+    "author": "Sirapa Atikomchakorn",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:1054-Mae-Wong-National-park-01.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/1054-Mae-Wong-National-park-01.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/1054-Mae-Wong-National-park-01.jpg/1280px-1054-Mae-Wong-National-park-01.jpg"
+  },
+  {
+    "role": "home-hero",
+    "image": "/images/home-hero.webp",
+    "place": "Wat Chang Rob, Kamphaeng Phet Historical Park",
+    "author": "Guido Johannes Joerg (Endimione)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wat_Chang_Rob.JPG",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Wat_Chang_Rob.JPG",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Wat_Chang_Rob.JPG/1280px-Wat_Chang_Rob.JPG"
+  },
+  {
+    "role": "home-heritage",
+    "image": "/images/home-heritage.webp",
+    "place": "Standing Buddha, Wat Phra Si Iriyabot",
+    "author": "Ananda",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:Standing_Buddha_-_Wat_Phra_Si_Iriyabot.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Standing_Buddha_-_Wat_Phra_Si_Iriyabot.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Standing_Buddha_-_Wat_Phra_Si_Iriyabot.jpg/960px-Standing_Buddha_-_Wat_Phra_Si_Iriyabot.jpg"
+  },
+  {
+    "role": "home-culture",
+    "image": "/images/home-culture.webp",
+    "place": "Wat Phra Borommathat, Nakhon Chum",
+    "author": "Kittipong khunnen",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wat_Phra_Borom_That_Kamphaeng_Phet,_Thailand._03.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._03.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._03.jpg/1280px-Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._03.jpg"
+  },
+  {
+    "role": "home-nature",
+    "image": "/images/home-nature.webp",
+    "place": "Khlong Lan National Park",
+    "author": "Tang2bar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nature_and_Tradition_at_Khlong_Lan_National_Park.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/c/ca/Nature_and_Tradition_at_Khlong_Lan_National_Park.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Nature_and_Tradition_at_Khlong_Lan_National_Park.jpg/1280px-Nature_and_Tradition_at_Khlong_Lan_National_Park.jpg"
+  },
+  {
+    "role": "featured-1",
+    "image": "/images/featured-1.webp",
+    "place": "Wat Phra Si Iriyabot, Kamphaeng Phet Historical Park",
+    "author": "Ruslik0",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wat_Phra_Si_Iriyabot_(Kamphaeng_Phet)_01.JPG",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Wat_Phra_Si_Iriyabot_%28Kamphaeng_Phet%29_01.JPG",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Wat_Phra_Si_Iriyabot_%28Kamphaeng_Phet%29_01.JPG/1280px-Wat_Phra_Si_Iriyabot_%28Kamphaeng_Phet%29_01.JPG"
+  },
+  {
+    "role": "featured-2",
+    "image": "/images/featured-2.webp",
+    "place": "Wat Phra Borommathat, Nakhon Chum",
+    "author": "Kittipong khunnen",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wat_Phra_Borom_That_Kamphaeng_Phet,_Thailand._05.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._05.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._05.jpg/1280px-Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._05.jpg"
+  },
+  {
+    "role": "featured-3",
+    "image": "/images/featured-3.webp",
+    "place": "Khlong Lan Waterfall",
+    "author": "Khunkay",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Klonglan_waterfall_01.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Klonglan_waterfall_01.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Klonglan_waterfall_01.jpg/1280px-Klonglan_waterfall_01.jpg"
+  },
+  {
+    "role": "about-hero",
+    "image": "/images/about-hero.webp",
+    "place": "Historic city wall, Kamphaeng Phet",
+    "author": "Muhranoff",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet,_sity_wall.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Kamphaeng_Phet%2C_sity_wall.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Kamphaeng_Phet%2C_sity_wall.jpg/1280px-Kamphaeng_Phet%2C_sity_wall.jpg"
+  },
+  {
+    "role": "about-culture",
+    "image": "/images/about-culture.webp",
+    "place": "Wat Phra Borommathat, Nakhon Chum",
+    "author": "Kittipong khunnen",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wat_Phra_Borom_That_Kamphaeng_Phet,_Thailand._02.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/43/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._02.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._02.jpg/1280px-Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._02.jpg"
+  },
+  {
+    "role": "about-nature",
+    "image": "/images/about-nature.webp",
+    "place": "Khlong Lan Waterfall",
+    "author": "Tang2bar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Khlong_Lan%27s_Majestic_Drop.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Khlong_Lan%27s_Majestic_Drop.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Khlong_Lan%27s_Majestic_Drop.jpg/1280px-Khlong_Lan%27s_Majestic_Drop.jpg"
+  },
+  {
+    "role": "detail-1",
+    "image": "/images/detail-1.webp",
+    "place": "Ruins in Kamphaeng Phet Historical Park",
+    "author": "PumpkinSky",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Unnamed_ruins_Kamphaeng_Phet_Historical_Park.JPG",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Unnamed_ruins_Kamphaeng_Phet_Historical_Park.JPG",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a6/Unnamed_ruins_Kamphaeng_Phet_Historical_Park.JPG/1280px-Unnamed_ruins_Kamphaeng_Phet_Historical_Park.JPG"
+  },
+  {
+    "role": "detail-2",
+    "image": "/images/detail-2.webp",
+    "place": "Wat Phra Borommathat, Nakhon Chum",
+    "author": "Kittipong khunnen",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wat_Phra_Borom_That_Kamphaeng_Phet,_Thailand._04.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._04.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5d/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._04.jpg/1280px-Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._04.jpg"
+  },
+  {
+    "role": "detail-3",
+    "image": "/images/detail-3.webp",
+    "place": "Khlong Lan Waterfall",
+    "author": "Khunkay",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Klonglan_waterfall_08.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Klonglan_waterfall_08.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/32/Klonglan_waterfall_08.jpg/1280px-Klonglan_waterfall_08.jpg"
+  },
+  {
+    "role": "detail-4",
+    "image": "/images/detail-4.webp",
+    "place": "Walking Buddha exhibit, Kamphaeng Phet National Museum",
+    "author": "Supakit prem",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Kamphaeng_Phet_National_Museum_%22Walking_Buddha%22_(29_May_2026).jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Kamphaeng_Phet_National_Museum_%22Walking_Buddha%22_%2829_May_2026%29.jpg",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Kamphaeng_Phet_National_Museum_%22Walking_Buddha%22_%2829_May_2026%29.jpg/1280px-Kamphaeng_Phet_National_Museum_%22Walking_Buddha%22_%2829_May_2026%29.jpg"
+  },
+  {
+    "role": "detail-5",
+    "image": "/images/detail-5.webp",
+    "place": "Chong Yen viewpoint, Mae Wong National Park",
+    "author": "Teeradondon",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chong_Yen_view_point_01.JPG",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/a/a4/Chong_Yen_view_point_01.JPG",
+    "downloadUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Chong_Yen_view_point_01.JPG/1280px-Chong_Yen_view_point_01.JPG"
+  }
+]

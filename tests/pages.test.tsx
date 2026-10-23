@@ -1,6 +1,7 @@
 import test, { beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { create, act, type ReactTestRenderer } from 'react-test-renderer';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { AppProvider, useApp } from '../src/app/contexts/AppContext';
@@ -12,7 +13,7 @@ import { AboutPage } from '../src/app/components/pages/AboutPage';
 import { FormPage } from '../src/app/components/pages/FormPage';
 import { IndexPage } from '../src/app/components/pages/IndexPage';
 import { mockAttractions, googleMapsUrl, googleDirectionsUrl, mapQuery } from '../src/app/types/TouristAttraction';
-import { photoCredits } from '../src/app/data/photoCredits';
+import { photoCredits, attractionPhoto } from '../src/app/data/photoCredits';
 
 const noNavigation = () => {};
 const wrap = (children: React.ReactNode) => <LanguageProvider><AppProvider>{children}</AppProvider></LanguageProvider>;
@@ -68,4 +69,26 @@ test('saved text is escaped rather than interpreted as HTML', () => {
     if (previous) Object.defineProperty(globalThis, 'localStorage', previous);
     else Reflect.deleteProperty(globalThis, 'localStorage');
   }
+});
+test('every default photo position across the public site uses a distinct licensed image', () => {
+  const html = [
+    renderToStaticMarkup(wrap(<IndexPage onNavigate={noNavigation} />)),
+    renderToStaticMarkup(wrap(<AboutPage />)),
+    renderToStaticMarkup(wrap(<AttractionsPage onNavigate={noNavigation} />)),
+    ...mockAttractions.map(a => renderToStaticMarkup(wrap(<DetailPage attractionId={a.id} onNavigate={noNavigation} />))),
+  ].join('');
+  const displayed = [...html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)].map(match => match[1]);
+  assert.equal(displayed.length, 20);
+  assert.equal(new Set(displayed).size, displayed.length);
+  assert.equal(new Set(photoCredits.map(p => p.source)).size, 20);
+  const hashes = displayed.map(image => {
+    assert.ok(photoCredits.some(p => p.image === image && p.author && p.licenseUrl));
+    return createHash('sha256').update(readFileSync('public' + image)).digest('hex');
+  });
+  assert.equal(new Set(hashes).size, displayed.length);
+});
+test('custom catalogue images remain under the editor control', () => {
+  const custom = { ...mockAttractions[0], image: 'https://example.com/custom.png' };
+  assert.equal(attractionPhoto(custom, 'detail'), custom.image);
+  assert.equal(attractionPhoto(custom, 'featured'), custom.image);
 });

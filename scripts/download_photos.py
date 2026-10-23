@@ -3,15 +3,11 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 import time
+import json
 
 ROOT = Path(__file__).resolve().parents[1] / 'reference' / 'photos'
-PHOTOS = {
-    'historical-park.jpg': 'https://upload.wikimedia.org/wikipedia/commons/3/3d/Kamphaeng_Phet_Historical_Park.jpg',
-    'wat-phra-borommathat.jpg': 'https://upload.wikimedia.org/wikipedia/commons/5/52/Wat_Phra_Borom_That_Kamphaeng_Phet%2C_Thailand._01.jpg',
-    'khlong-lan.jpg': 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Khlong_Lan_National_Park.jpg',
-    'national-museum.jpg': 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Kamphaeng_Phet_National_Museum.jpg',
-    'mae-wong.jpg': 'https://upload.wikimedia.org/wikipedia/commons/a/a6/1054-Mae-Wong-National-park-01.jpg',
-}
+manifest = json.loads((ROOT.parent / 'photo-manifest.json').read_text(encoding='utf8'))
+PHOTOS = {Path(photo['image']).stem + '.jpg': photo.get('downloadUrl', photo['url']) for photo in manifest}
 
 def download(item):
     filename, url = item
@@ -30,6 +26,9 @@ def download(item):
 
 ROOT.mkdir(parents=True, exist_ok=True)
 for item in PHOTOS.items():
+    if (ROOT / item[0]).exists():
+        print(f'{item[0]}: already downloaded', flush=True)
+        continue
     for attempt in range(3):
         try:
             download(item)
@@ -37,5 +36,7 @@ for item in PHOTOS.items():
         except HTTPError as error:
             if error.code != 429 or attempt == 2:
                 raise
-            time.sleep(15)
+            delay = int(error.headers.get('Retry-After', '15'))
+            print(f'Rate limited; waiting {delay} seconds', flush=True)
+            time.sleep(delay)
     time.sleep(2)

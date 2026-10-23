@@ -67,5 +67,8 @@ must not be used to protect sensitive records or credentials.
 
 See [reference/SOURCES.md](reference/SOURCES.md) for research and photo licenses.
 Maps use specific names and localities; no Google API key is required.
+The curated gallery uses 20 distinct photographs across the home page, About,
+attraction cards and attraction details. Each position has a dedicated image;
+the source, author and license are recorded in `reference/photo-manifest.json`.
 Run scripts/download_photos.py followed by scripts/optimize_photos.py to rebuild
 the local images (Python and Pillow required).
